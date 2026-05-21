@@ -34,7 +34,30 @@ public class PedidoDAO {
         jdbc.update(sql, obj);
     }
 
-    public ArrayList<Pedido> listarPedidos(){
+    public void atualizarPedido(Pedido novo, String uuid) {
+        String sql = "UPDATE pedido " +
+            "SET nome_cliente = ?, telefone = ?, forma_pagamento = ?, data_retirada = ?::date WHERE id = ?::uuid";
+        Object[] obj = new Object[]{
+            novo.getNomeCliente(),
+            novo.getTelefone(),
+            novo.getFormaPagamento(),
+            novo.getDataRetirada(),
+            uuid
+        };
+        jdbc.update(sql, obj);
+    }
+
+    public void deletarPedido(String uuid) {
+        String sql = "DELETE FROM pedido WHERE id = ?::uuid";
+        jdbc.update(sql, uuid);
+    }
+
+    public Pedido buscarPedido(String uuid) {
+        String sql = "SELECT * FROM pedido WHERE id = ?::uuid";
+        return Pedido.converter(jdbc.queryForMap(sql, uuid));
+    }
+
+    public ArrayList<Pedido> listarPedidos() {
         String sql = "SELECT * FROM pedido ORDER BY data_pedido DESC";
         return Pedido.converterTodos(jdbc.queryForList(sql));
     }

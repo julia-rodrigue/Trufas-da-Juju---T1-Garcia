@@ -11,11 +11,23 @@ public class PedidoService {
     @Autowired
     PedidoDAO pedidoDAO;
 
-    public void inserirPedido(Pedido pedido){
+    public void inserirPedido(Pedido pedido) {
         pedidoDAO.inserirPedido(pedido);
     }
 
-    public ArrayList<Pedido> listarPedidos(){
+    public ArrayList<Pedido> listarPedidos() {
         return pedidoDAO.listarPedidos();
+    }
+
+    public Pedido listarPedidos(String uuid) {
+        return pedidoDAO.buscarPedido(uuid);
+    }
+
+    public void atualizarPedido(Pedido novo, String uuid) {
+        pedidoDAO.atualizarPedido(novo, uuid);
+    }
+
+    public void deletarPedido(String uuid) {
+        pedidoDAO.deletarPedido(uuid);
     }
 }
